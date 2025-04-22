@@ -3,3 +3,5 @@
 ### 新規プロジェクトのディレクトリを作成後、以下のコードを実行してください。
   - git@github.com:nogi-megumi/laravel9-templete.git
   - mv laravel9-templete <プロジェクト名>
+
+### Fortifyの動作確認をしました。最新版に対応できます。
