@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->foreignUuid('user_id');
+            $table->dateTime('start_at');
+            $table->dateTime('end_at');
+            $table->string("status");
             $table->timestamps();
         });
     }
