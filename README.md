@@ -1,7 +1,7 @@
-# laravel9-templete
-### laravel9.xでの環境設定です
-### 新規プロジェクトのディレクトリを作成後、以下のコードを実行してください。
+# 勤怠管理
+### 使用技術
+### 以下のコードを実行してください。
   - git@github.com:nogi-megumi/laravel9-templete.git
   - mv laravel9-templete <プロジェクト名>
 
-### Fortifyの動作確認をしました。最新版に対応できます。
+### Unit test
