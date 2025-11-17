@@ -1,0 +1,157 @@
+.app,
+header,
+main,
+.header-logo,
+.img-box__img,
+.header-navi,
+.navi-list,
+.form,
+.form-item,
+.form-item__input,
+.auth__button {
+    width: 100%;
+}
+
+.app {
+    height: 600px;
+}
+
+header {
+    background-color: #000;
+    height: 3em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.5em 1em;
+}
+
+.header-logo {
+    grid-column: 1/2;
+}
+
+.img-box {
+    width: 70%;
+}
+
+.header-navi {
+    grid-column: 3/4;
+}
+
+.navi-list {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.navi-list__button {
+    color: #fff;
+    font-size: 16px;
+    background-color: #000;
+    border: none;
+}
+
+main {
+    padding: 2em 0;
+    background-color: #e5e5e5bf;
+    height: inherit;
+}
+
+.content {
+    width: 50%;
+    text-align: center;
+    margin: auto;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.form-item {
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.form-item__label {
+    font-size: 16px;
+}
+
+.form-item__input {
+    line-height: 2em;
+}
+
+.auth__button {
+    background-color: #000;
+    color: #fff;
+    margin-top: 1em;
+    font-size: 16px;
+    padding: 0.5em 0;
+    border-radius: 5px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.link--white {
+    color: #fff;
+}
+
+.link {
+    text-align: center;
+}
+
+.link--blue {
+    color: #0022ff;
+}
+
+.content-title {
+    border-left: solid 0.5rem #000;
+    text-align: left;
+    padding-left: 1rem;
+}
+
+.table {
+    background-color: #fff;
+    border-radius: 5px;
+    width: 100%;
+    color: #808080;
+}
+
+
+.table__title {
+    border-bottom: solid 5px #e5e5e5bf;
+}
+
+.table__rows {
+    line-height: 2.5rem;
+}
+
+tbody>.table__rows {
+    border-bottom: solid 2px #e5e5e5bf;
+}
+
+.link--bold {
+    font-weight: bold;
+}
+
+.attendance-data {
+    margin-top: 1rem;
+}
+
+.button {
+    padding: 1rem 4rem;
+    border-radius: 1rem;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.button--black {
+    background-color: #000;
+    color: #fff;
+}
+
+.button--white {
+    background-color: #fff;
+}

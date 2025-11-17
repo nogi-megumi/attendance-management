@@ -1,0 +1,35 @@
+.status-block {
+    width: 100%;
+    text-align: center;
+    margin-top: 3rem;
+    padding-bottom: 1rem;
+}
+
+.status {
+    background-color: rgb(179 178 178);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 16px;
+}
+
+.date {
+    padding: 1rem;
+    font-size: 24px;
+}
+
+.time {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 3rem;
+}
+
+.message {
+    font-size: 16px;
+}
