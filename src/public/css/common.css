@@ -92,6 +92,7 @@ main {
 a {
     text-decoration: none;
     font-size: 16px;
+    color: #000;
 }
 
 .link--white {
@@ -110,6 +111,7 @@ a {
     border-left: solid 0.5rem #000;
     text-align: left;
     padding-left: 1rem;
+    font-size: 24px;
 }
 
 .table {
@@ -126,6 +128,7 @@ a {
 
 .table__rows {
     line-height: 2.5rem;
+    align-items: center;
 }
 
 tbody>.table__rows {
@@ -136,8 +139,8 @@ tbody>.table__rows {
     font-weight: bold;
 }
 
-.attendance-data {
-    margin-top: 1rem;
+.management-data {
+    margin-top: 2rem;
 }
 
 .button {
@@ -154,4 +157,16 @@ tbody>.table__rows {
 
 .button--white {
     background-color: #fff;
+}
+
+.grid__item__second {
+    grid-column: 2/3;
+}
+
+.grid__item__third {
+    grid-column: 3/4;
+}
+
+.grid__item__fourth {
+    grid-column: 4/5;
 }

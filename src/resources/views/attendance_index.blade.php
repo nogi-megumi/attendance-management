@@ -11,7 +11,7 @@
 @section('content')
 <div class="content">
     <h1 class="content-title">勤怠一覧</h1>
-    <div class="attendance-data">
+    <div class="management-data">
         <div class="pegination">
             <p><a class="pegination__link">&larr;前月</a></p>
             <p class="current">2025/11</p>
