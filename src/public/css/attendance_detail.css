@@ -1,0 +1,47 @@
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(5, 3rem) 5rem;
+}
+
+.grid__item--bold {
+    color: #000;
+    font-weight: bold;
+}
+
+.grid__item {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr) 2fr;
+    border-bottom: 2px solid #e5e5e5bf;
+}
+
+.grid__item__wide {
+    grid-column: 2/5;
+}
+
+.form-item__label {
+    padding-left: 3rem;
+    text-align: left;
+}
+
+.button-group__item {
+    width: 100%;
+    text-align: right;
+    margin-top: 2rem;
+}
+
+.form-item__input {
+    height: 2rem;
+}
+
+.form-button {
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.alart-message {
+    font-size: 16px;
+    color: rgb(250, 28, 28);
+}

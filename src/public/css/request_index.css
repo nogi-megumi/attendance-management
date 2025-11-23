@@ -1,0 +1,8 @@
+.tab-group{
+    width: 100%;
+    border-bottom:1px solid #000 ;
+}
+.tab{
+    margin: 1rem 3rem;
+    /* font-weight: bold; */
+}
