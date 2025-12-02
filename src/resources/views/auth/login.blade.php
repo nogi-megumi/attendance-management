@@ -2,35 +2,49 @@
 
 @section('content')
 <div class="content">
+
+    @if (Route::is('admin.login'))
+    <div class="title">管理者ログイン</div>
+    @else
     <div class="title">ログイン</div>
-    {{-- 管理者の時
-    <div class="title">管理者ログイン</div> --}}
+    @endif
     <div class="form-group">
         <form class="form" action="/login" method="POST">
             @csrf
-            {{-- <form class="form" action="/admin/login" method="POST"> --}}
-                <div class="form-item">
-                    <label class="form-item__label" for="">メールアドレス</label>
-                    <input class="form-item__input" type="text">
-                    <p class="error-message"></p>
-                </div>
-                <div class="form-item">
-                    <label class="form-item__label" for="">パスワード</label>
-                    <input class="form-item__input" type="text">
-                    <p class="error-message"></p>
-                </div>
-                <div class="form-item">
-                    <button class="auth__button">ログインする</button>
-                </div>
-                {{--
-                <div>
-                    <button class="auth__button">管理者ログインする</button>
-                </div> --}}
-            </form>
+            <div class="form-item">
+                <label class="form-item__label" for="email">メールアドレス</label>
+                <input class="form-item__input" type="email" name="email" value="{{old('email')}}">
+                <p class="error-message">
+                    @error('email')
+                    {{$message}}
+                    @enderror
+                </p>
+            </div>
+            <div class="form-item">
+                <label class="form-item__label" for="password">パスワード</label>
+                <input class="form-item__input" type="password" name="password">
+                <p class="error-message">
+                    @error('password')
+                    {{$message}}
+                    @enderror
+                </p>
+            </div>
+            @if (Route::is('admin.login'))
+            <div>
+                <button class="auth__button">管理者ログインする</button>
+            </div>
+            @else
+            <div class="form-item">
+                <button class="auth__button">ログインする</button>
+            </div>
+            @endif
+        </form>
     </div>
+    @if (!Route::is('admin.login'))
     <div class="link">
         <a class="link--blue" href="/register">会員登録はこちら</a>
     </div>
+    @endif
 </div>
 
 @endsection
