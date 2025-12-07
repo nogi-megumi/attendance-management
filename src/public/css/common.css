@@ -143,6 +143,10 @@ tbody>.table__rows {
     margin-top: 2rem;
 }
 
+button {
+    cursor: pointer;
+}
+
 .button {
     padding: 1rem 4rem;
     border-radius: 1rem;
@@ -169,4 +173,9 @@ tbody>.table__rows {
 
 .grid__item__fourth {
     grid-column: 4/5;
+}
+
+.error-message {
+    margin-top: 0;
+    color: #fd1919;
 }

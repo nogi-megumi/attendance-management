@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rests', function (Blueprint $table) {
-            $table->id();
-            $table->foreignUuid('user_id');
-            $table->dateTime('start_at');
-            $table->dateTime('end_at');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rests');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->nullable();
+        });
     }
 };
