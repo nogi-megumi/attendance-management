@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
-use Laravel\Fortify\Actions\AttemptToAuthenticate;
+use App\Actions\AttemptToAuthenticate;
 use Laravel\Fortify\Actions\CanonicalizeUsername;
 use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
@@ -16,23 +16,58 @@ use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 use App\Http\Requests\LoginRequest;
+use App\Responses\AdminLoginResponse;
 
-class LoginController extends Controller
+class AdminLoginController extends Controller
 {
+    /**
+     * The guard implementation.
+     *
+     * @var \Illuminate\Contracts\Auth\StatefulGuard
+     */
     protected $guard;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
+     * @return void
+     */
     public function __construct(StatefulGuard $guard)
     {
         $this->guard = $guard;
     }
 
+    /**
+     * Show the login view.
+     *
+     * @param  App\Http\Requests\LoginRequest  $request
+     * @return \Laravel\Fortify\Contracts\LoginViewResponse
+     */
+    public function create()
+    {
+        return view('auth.login',['guard'=>'admin']);
+    }
+
+    /**
+     * Attempt to authenticate a new session.
+     *
+     * @param  App\Http\Requests\LoginRequest  $request
+     * @return mixed
+     */
     public function store(LoginRequest $request)
     {
         return $this->loginPipeline($request)->then(function ($request) {
-            return app(LoginResponse::class);
+            return app(AdminLoginResponse::class);
         });
     }
 
+    /**
+     * Get the authentication pipeline instance.
+     *
+     * @param  App\Http\Requests\LoginRequest  $request
+     * @return \Illuminate\Pipeline\Pipeline
+     */
     protected function loginPipeline(LoginRequest $request)
     {
         if (Fortify::$authenticateThroughCallback) {

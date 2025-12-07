@@ -9,7 +9,7 @@
     <div class="title">ログイン</div>
     @endif
     <div class="form-group">
-        <form class="form" action="/login" method="POST">
+        <form class="form" action="{{isset($gaurd) ? route('admin.login') : route('login')}}" method="POST">
             @csrf
             <div class="form-item">
                 <label class="form-item__label" for="email">メールアドレス</label>
@@ -40,7 +40,7 @@
             @endif
         </form>
     </div>
-    @if (!Route::is('admin.login'))
+    @if (Route::is('login'))
     <div class="link">
         <a class="link--blue" href="/register">会員登録はこちら</a>
     </div>
