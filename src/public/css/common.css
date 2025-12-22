@@ -161,6 +161,7 @@ button {
 
 .button--white {
     background-color: #fff;
+    border: solid 1px #fff;
 }
 
 .grid__item__second {

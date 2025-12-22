@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
-use App\Actions\AttemptToAuthenticate;
+use App\Actions\Admin\AttemptToAuthenticate;
 use Laravel\Fortify\Actions\CanonicalizeUsername;
 use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
@@ -17,6 +17,7 @@ use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 use App\Http\Requests\LoginRequest;
 use App\Responses\AdminLoginResponse;
+use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
@@ -46,7 +47,7 @@ class AdminLoginController extends Controller
      */
     public function create()
     {
-        return view('auth.login',['guard'=>'admin']);
+        return view('auth.login', ['guard' => 'admin']);
     }
 
     /**
@@ -89,5 +90,22 @@ class AdminLoginController extends Controller
             AttemptToAuthenticate::class,
             PrepareAuthenticatedSession::class,
         ]));
+    }
+    /**
+     * Destroy an authenticated session.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Laravel\Fortify\Contracts\LogoutResponse
+     */
+    public function destroy(Request $request): LogoutResponse
+    {
+        $this->guard->logout();
+
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
+        return app(LogoutResponse::class);
     }
 }

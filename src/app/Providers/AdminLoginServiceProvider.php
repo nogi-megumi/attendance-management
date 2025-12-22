@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\AdminLoginController;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
-use App\Actions\AttemptToAuthenticate;
+use App\Actions\Admin\AttemptToAuthenticate;
 use Illuminate\Support\ServiceProvider;
 
 class AdminLoginServiceProvider extends ServiceProvider
