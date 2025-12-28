@@ -17,9 +17,11 @@
             {{-- admin時
             前日　今日の日付　翌日
             --}}
-            <p><a class="pegination__link">&larr;前月</a></p>
-            <p class="current">2025/11</p>
-            <p><a class="pegination__link">翌月&rarr;</a></p>
+            <p><a class="pegination__link" href="?month={{$targetDate->copy()->subMonth()->format('Y/m')}}">&larr;前月</a>
+            </p>
+            <p class="current">{{$targetDate->format('Y/m')}}</p>
+            <p><a class="pegination__link" href="?month={{$targetDate->copy()->addMonth()->format('Y/m')}}">翌月&rarr;</a>
+            </p>
         </div>
         <div>
             <table class="table">
@@ -35,15 +37,26 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($attendances as $attendance)
                     <tr class="table__rows">
                         {{-- admin時 スタッフの名前 --}}
-                        <td>11/01&#65288;土&#65289;</td>
-                        <td>09:00</td>
-                        <td>18:00</td>
-                        <td>01:00</td>
-                        <td>08:00</td>
-                        <td><a class="link--bold" href="">詳細</a></td>
+                        @if (isset($attendance->id))
+                        <td>{{$attendance->start_at->isoFormat('MM/DD(ddd)')}}</td>
+                        <td>{{$attendance->start_at->format('H:i')}}</td>
+                        <td>{{$attendance->end_at ? $attendance->end_at->format('H:i'):""}}</td>
+                        <td>{{$attendance->rest_total}}</td>
+                        <td>{{$attendance->work_total}}</td>
+                        <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
+                        @else
+                        <td>{{$attendance->display_date->isoFormat('MM/DD(ddd)')}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="table__data--black">詳細</td>
+                        @endif
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -12,18 +12,60 @@ use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    public function index(){
-        // 勤怠一覧画面を表示する
-        // attendancesからuser_idが一致する、今月分のデータを取得する。
-        // restsからattendancesと紐づいたデータを取得する。
-        // attendancesのend_atとstart_atの差分を計算する。これをwork_timeとする。
-        // restsのend_atとstart_atの差分を計算し、これをrest_timeとする。
-        // work_timeとrest_timeの差分を計算する。
+    public function index(Request $request)
+    {
         $user = Auth::user();
-        $month=Carbon::today()->isoFormat('YYYY/MM');
-        $workData=Attendance::whereDate('created_at', $month)->where('user_id', $user->id)->get();
-        $restData=Rest::whereDate('created_at', $month)->where('attendance_id', $workData->id)->get();
-        return view('attendance_index',compact('workData'));
+        $monthParam = $request->query('month', now()->format('Y-m'));
+        $targetDate = Carbon::parse($monthParam . '-01');
+        $startOfMonth = $targetDate->copy()->startOfMonth();
+        $endOfMonth = $targetDate->copy()->endOfMonth();
+
+        $workDatas = Attendance::query()
+            ->where('user_id', $user->id)->whereBetween('start_at', [$startOfMonth, $endOfMonth])->with('rests')->orderBy('start_at', 'asc')
+            ->get()->keyBy(function($item){
+                return $item->start_at->format('Y-m-d');
+            });
+
+        $attendances=[];
+        $tempDate=$startOfMonth->copy();
+        while ($tempDate <= $endOfMonth) {
+            $dateStr=$tempDate->format('Y-m-d');
+            $workData=$workDatas->get($dateStr);
+            if ($workData) {
+                $totalRestMinutes = 0;
+                foreach ($workData->rests as $rest) {
+                    if ($rest->start_at && $rest->end_at) {
+                        $totalRestMinutes += $rest->start_at->diffInMinutes($rest->end_at);
+                    }
+                }
+
+                $stayMinutes = 0;
+                if ($workData->end_at) {
+                    $stayMinutes = $workData->start_at->diffInMinutes($workData->end_at);
+                }
+                $workingMinutes = max(0, $stayMinutes - $totalRestMinutes);
+
+                $workData->work_total = sprintf('%02d:%02d', floor($workingMinutes / 60), $workingMinutes % 60);
+                $workData->rest_total = sprintf('%02d:%02d', floor($totalRestMinutes / 60), $totalRestMinutes % 60);
+
+                $attendances[]=$workData;
+            }else{
+                $attendances[]=(object)[
+                    'display_date'=>$tempDate->copy(),
+                    'start_at'=>null,
+                    'end_at'=>null,
+                    'work_total'=>null,
+                    'rest_total'=>null
+                ];
+            }
+            $tempDate->addDay();
+        }
+        
+        $data = [
+            'targetDate' => $targetDate,
+            'attendances' => $attendances,
+        ];
+        return view('attendance_index', $data);
     }
 
     public function show()

@@ -34,7 +34,7 @@
                     <td>2025/11/01</td>
                     <td>遅延のため</td>
                     <td>2025/11/02</td>
-                    <td><a class="link--bold" href="">詳細</a></td>
+                    <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
                 </tr>
             </tbody>
         </table>

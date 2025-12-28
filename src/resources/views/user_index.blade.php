@@ -24,7 +24,7 @@
                 <tr class="table__rows">
                     <td class="grid__item__second">西怜奈</td>
                     <td class="grid__item__third">reina.n@coathtech.com</td>
-                    <td class="grid__item__fourth"><a class="link--bold" href="">詳細</a></td>
+                    <td class="grid__item__fourth"><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
                 </tr>
             </tbody>
         </table>
