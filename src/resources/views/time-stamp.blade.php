@@ -10,14 +10,49 @@
 
 @section('content')
 <div class="content">
-    <div class="status-block"><span class="status">勤務中</span></div>
-    <div class="date">2025年11月16日（日）</div>
-    <div class="time">08:30</div>
+    <div class="status-block"><span class="status">{{$workStatus}}</span></div>
+    <div class="date">{{$today->isoFormat('YYYY年MM月DD日(ddd)')}}</div>
+    <div class="time">{{$today->isoFormat('HH:mm')}}</div>
     <div class="button-group">
-        <div class="button-group__item"><a class="button button--black" href="">退勤</a></div>
-        <div class="button-group__item"><a class="button button--white" href="">休憩入</a></div>
-    </div>
-    {{-- 退勤後の表示画面
-    <div class="message">お疲れ様でした</div> --}}
+        @switch($workStatus)
+        @case('出勤外')
+        <div class="button-group__item">
+            <form action="/attendance" method="POST">
+                @csrf
+                <button class="button button--black">出勤</button>
+            </form>
+        </div>
+        @break
+        @case('出勤中')
+        <div class="button-group__item">
+            <form action="/attendance" method="POST">
+                @csrf
+                @method('PUT')
+                @if(isset($workData))
+                <input type="hidden" name="id" value="{{$workData->id}}">
+                @endif
+                <button class="button button--black">退勤</button>
+            </form>
+        </div>
+        <div class="button-group__item">
+            <form action="/rest" method="POST">
+                @csrf
+                <input type="hidden" name="attendance_id" value="{{$workData->id}}">
+                <button class="button button--white">休憩入</button>
+            </form>
+        </div>
+        @break
+        @case('休憩中')
+        <form action="/rest" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="attendance_id" value="{{$workData->id}}">
+            <button class="button button--white">休憩戻</button>
+        </form>
+        @break
+        @case('退勤済')
+        <div class="message">お疲れ様でした。</div>
+        @break
+        @endswitch
 </div>
 @endsection
