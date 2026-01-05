@@ -52,7 +52,7 @@ header {
 main {
     padding: 2em 0;
     background-color: #e5e5e5bf;
-    height: inherit;
+    min-height: 100vh;
 }
 
 .content {
@@ -121,7 +121,6 @@ a {
     color: #808080;
 }
 
-
 .table__title {
     border-bottom: solid 5px #e5e5e5bf;
 }
@@ -135,8 +134,12 @@ tbody>.table__rows {
     border-bottom: solid 2px #e5e5e5bf;
 }
 
-.link--bold {
+.table__rows>td {
     font-weight: bold;
+}
+
+.table__data--black {
+    color: #000;
 }
 
 .management-data {

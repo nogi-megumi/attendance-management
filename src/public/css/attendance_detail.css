@@ -1,7 +1,7 @@
 .grid {
     width: 100%;
     display: grid;
-    grid-template-rows: repeat(5, 3rem) 5rem;
+    grid-template-rows: repeat(5, 4rem) 5rem;
 }
 
 .grid__item--bold {
@@ -17,6 +17,8 @@
 
 .grid__item__wide {
     grid-column: 2/5;
+    padding: 0.5rem;
+    font-size: 16px;
 }
 
 .form-item__label {
@@ -32,6 +34,8 @@
 
 .form-item__input {
     height: 2rem;
+    text-align: center;
+    font-size: 18px;
 }
 
 .form-button {

@@ -12,11 +12,11 @@
         </li>
         @elseif(Auth::guard('web')->check())
 
-        @if($workStatus==='退勤済')
+        @if(($workStatus ?? '未設定')==='退勤済')
         <li class="navi-list__item"><a class="link--white" href="/attendance/list">今月の出勤一覧</a></li>
         <li class="navi-list__item"><a class="link--white" href="/stamp_correction_request/list">申請一覧</a></li>
         @else
-        <li class="navi-list__item"><a class="link--white" href="/attendance/detail/{id}">勤怠</a></li>
+        <li class="navi-list__item"><a class="link--white" href="/">勤怠</a></li>
         <li class="navi-list__item"><a class="link--white" href="/attendance/list">勤怠一覧</a></li>
         <li class="navi-list__item"><a class="link--white" href="/stamp_correction_request/list">申請</a></li>
         @endif
