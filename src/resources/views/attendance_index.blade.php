@@ -17,10 +17,10 @@
             {{-- admin時
             前日　今日の日付　翌日
             --}}
-            <p><a class="pegination__link" href="?month={{$targetDate->copy()->subMonth()->format('Y/m')}}">&larr;前月</a>
+            <p><a class="pegination__link" href="?month={{$targetDate->copy()->subMonth()->format('Y-m')}}">&larr;前月</a>
             </p>
             <p class="current">{{$targetDate->format('Y/m')}}</p>
-            <p><a class="pegination__link" href="?month={{$targetDate->copy()->addMonth()->format('Y/m')}}">翌月&rarr;</a>
+            <p><a class="pegination__link" href="?month={{$targetDate->copy()->addMonth()->format('Y-m')}}">翌月&rarr;</a>
             </p>
         </div>
         <div>

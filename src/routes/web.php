@@ -28,7 +28,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/rest', [RestController::class, 'store']);
     Route::put('/rest', [RestController::class, 'update']);
     Route::get('/attendance/list',[AttendanceController::class,'index']);
-    Route::get('/attendance/detail/{$attendance->id}',[AttendanceController::class, 'show']);
+    Route::get('/attendance/detail/{attendance}',[AttendanceController::class, 'show']);
 });
 
 

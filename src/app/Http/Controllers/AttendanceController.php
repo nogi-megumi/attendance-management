@@ -22,15 +22,15 @@ class AttendanceController extends Controller
 
         $workDatas = Attendance::query()
             ->where('user_id', $user->id)->whereBetween('start_at', [$startOfMonth, $endOfMonth])->with('rests')->orderBy('start_at', 'asc')
-            ->get()->keyBy(function($item){
+            ->get()->keyBy(function ($item) {
                 return $item->start_at->format('Y-m-d');
             });
 
-        $attendances=[];
-        $tempDate=$startOfMonth->copy();
+        $attendances = [];
+        $tempDate = $startOfMonth->copy();
         while ($tempDate <= $endOfMonth) {
-            $dateStr=$tempDate->format('Y-m-d');
-            $workData=$workDatas->get($dateStr);
+            $dateStr = $tempDate->format('Y-m-d');
+            $workData = $workDatas->get($dateStr);
             if ($workData) {
                 $totalRestMinutes = 0;
                 foreach ($workData->rests as $rest) {
@@ -48,19 +48,19 @@ class AttendanceController extends Controller
                 $workData->work_total = sprintf('%02d:%02d', floor($workingMinutes / 60), $workingMinutes % 60);
                 $workData->rest_total = sprintf('%02d:%02d', floor($totalRestMinutes / 60), $totalRestMinutes % 60);
 
-                $attendances[]=$workData;
-            }else{
-                $attendances[]=(object)[
-                    'display_date'=>$tempDate->copy(),
-                    'start_at'=>null,
-                    'end_at'=>null,
-                    'work_total'=>null,
-                    'rest_total'=>null
+                $attendances[] = $workData;
+            } else {
+                $attendances[] = (object)[
+                    'display_date' => $tempDate->copy(),
+                    'start_at' => null,
+                    'end_at' => null,
+                    'work_total' => null,
+                    'rest_total' => null
                 ];
             }
             $tempDate->addDay();
         }
-        
+
         $data = [
             'targetDate' => $targetDate,
             'attendances' => $attendances,
@@ -68,9 +68,9 @@ class AttendanceController extends Controller
         return view('attendance_index', $data);
     }
 
-    public function show()
+    public function show(Attendance $attendance)
     {
         // 勤怠詳細を表示する
-        return view('attendance_detail');
+        return view('attendance_detail', compact('attendance'));
     }
 }

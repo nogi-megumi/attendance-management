@@ -28,14 +28,16 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($collection as $item)
                 <tr class="table__rows">
-                    <td>承認待ち</td>
-                    <td>西怜奈</td>
-                    <td>2025/11/01</td>
-                    <td>遅延のため</td>
-                    <td>2025/11/02</td>
+                    <td>{{承認待ち}}</td>
+                    <td>{{西怜奈}}</td>
+                    <td>{{2025/11/01}}</td>
+                    <td>{{遅延のため}}</td>
+                    <td>{{2025/11/02}}</td>
                     <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
