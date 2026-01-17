@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RestController;
+use App\Http\Controllers\StampCorrectRequestController;
 use App\Http\Controllers\WorkController;
 
 Route::prefix('/admin')->group(function () {
@@ -16,6 +17,7 @@ Route::prefix('/admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/attendance/list', [AdminAttendanceController::class, 'index']);
+        Route::post('/stamp_correction_request/approve/{stamp_correct_request}', [StampCorrectRequestController::class, 'approve']);
     });
 });
 
@@ -27,8 +29,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/attendance', [WorkController::class, 'update']);
     Route::post('/rest', [RestController::class, 'store']);
     Route::put('/rest', [RestController::class, 'update']);
-    Route::get('/attendance/list',[AttendanceController::class,'index']);
-    Route::get('/attendance/detail/{attendance}',[AttendanceController::class, 'show']);
+    Route::get('/attendance/list', [AttendanceController::class, 'index']);
+    Route::get('/attendance/detail/{attendance}', [AttendanceController::class, 'show']);
+    Route::post('/stamp_correction_request', [StampCorrectRequestController::class, 'store']);
+    Route::get('/stamp_correction_request/list', [AttendanceController::class, 'requestIndex']);
 });
 
 

@@ -27,4 +27,9 @@ class Attendance extends Model
     {
         return $this->hasMany(Rest::class);
     }
+
+    public function stamp_correct_requests()
+    {
+        return $this->hasMany(StampCorrectRequest::class);
+    }
 }

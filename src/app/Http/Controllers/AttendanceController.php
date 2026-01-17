@@ -67,10 +67,22 @@ class AttendanceController extends Controller
         ];
         return view('attendance_index', $data);
     }
+    public function requestIndex(Request $request)
+    {
+        if (isset($request->tab)) {
+            $tab = $request->get('tab');
+        } else {
+            $tab = 1;
+        }
+        $user = Auth::user();
+        $attendances = Attendance::where('user_id', $user->id)->get();
+        return view('request_index', compact('attendances', 'tab'));
+    }
 
     public function show(Attendance $attendance)
     {
-        // 勤怠詳細を表示する
+        // $attendance->stamp_correct_requests;
+        // dd($attendance);
         return view('attendance_detail', compact('attendance'));
     }
 }

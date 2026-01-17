@@ -1,7 +1,7 @@
 .grid {
     width: 100%;
     display: grid;
-    grid-template-rows: repeat(5, 4rem) 5rem;
+    grid-template-rows: repeat(5, 4rem)5rem;
 }
 
 .grid__item--bold {

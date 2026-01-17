@@ -12,8 +12,8 @@
 <div class="content">
     <h1 class="content-title">申請一覧</h1>
     <div class="tab-group">
-        <a class="tab" href="">承認待ち</a>
-        <a class="" href="">承認済み</a>
+        <a class="tab {{$tab==1 ? 'active':''}}" href="/stamp_correction_request/list/?tab=1">承認待ち</a>
+        <a class="tab {{$tab==2 ? 'active':''}}" href="/stamp_correction_request/list/?tab=2">承認済み</a>
     </div>
     <div>
         <table class="table">
@@ -28,15 +28,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($collection as $item)
+                @foreach ($attendances as $attendance)
+                @if (isset($attendance->stamp_correction_requests))
                 <tr class="table__rows">
-                    <td>{{承認待ち}}</td>
-                    <td>{{西怜奈}}</td>
-                    <td>{{2025/11/01}}</td>
-                    <td>{{遅延のため}}</td>
-                    <td>{{2025/11/02}}</td>
+                    <td>@if ($attendance->stamp_correction_requests()->status==1)
+                        承認待ち
+                        @elseif($attendance->stamp_correction_requests()->status==2)
+                        承認済み
+                        @endif
+                    </td>
+                    <td>{{$attendance->user()->name}}</td>
+                    <td>{{$attendance->created_at->format('Y/m/d')}}</td>
+                    <td>{{$attendance->stamp_correction_requests()->note}}</td>
+                    <td>{{$attendance->stamp_correction_requests()->created_at}}</td>
                     <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
                 </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>
