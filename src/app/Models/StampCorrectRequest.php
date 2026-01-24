@@ -17,8 +17,8 @@ class StampCorrectRequest extends Model
         'status',
     ];
     protected $casts = [
-        // 'updated_start_at' => 'datetime',
-        // 'updated_end_at' => 'datetime',
+        'updated_start_at' => 'datetime',
+        'updated_end_at' => 'datetime',
         'updated_rests'=>'array',
     ];
     public function attendance()

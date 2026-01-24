@@ -28,23 +28,25 @@
                 </tr>
             </thead>
             <tbody>
+                @if (isset($attendances))
                 @foreach ($attendances as $attendance)
-                @if (isset($attendance->stamp_correction_requests))
-                <tr class="table__rows">
-                    <td>@if ($attendance->stamp_correction_requests()->status==1)
-                        承認待ち
-                        @elseif($attendance->stamp_correction_requests()->status==2)
-                        承認済み
-                        @endif
-                    </td>
-                    <td>{{$attendance->user()->name}}</td>
-                    <td>{{$attendance->created_at->format('Y/m/d')}}</td>
-                    <td>{{$attendance->stamp_correction_requests()->note}}</td>
-                    <td>{{$attendance->stamp_correction_requests()->created_at}}</td>
-                    <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
-                </tr>
-                @endif
+                    @foreach ($attendance->stamp_correct_requests as $request)
+                    <tr class="table__rows">
+                        <td>@if ($request->status==1)
+                            承認待ち
+                            @elseif($request->status==2)
+                            承認済み
+                            @endif
+                        </td>
+                        <td>{{$attendance->user->name}}</td>
+                        <td>{{$attendance->start_at->format('Y/m/d')}}</td>
+                        <td>{{$request->note}}</td>
+                        <td>{{$request->created_at->format('Y/m/d')}}</td>
+                        <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
+                    </tr>
+                    @endforeach
                 @endforeach
+                @endif
             </tbody>
         </table>
     </div>

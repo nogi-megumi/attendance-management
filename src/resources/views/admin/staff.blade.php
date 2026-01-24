@@ -25,7 +25,7 @@
                 <tr class="table__rows">
                     <td class="grid__item__second">{{$user->name}}</td>
                     <td class="grid__item__third">{{$user->email}}</td>
-                    <td class="grid__item__fourth"><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
+                    <td class="grid__item__fourth"><a class="" href="/admin/attendance/staff/{{$user->id}}">詳細</a></td>
                 </tr>
                 @endforeach
             </tbody>

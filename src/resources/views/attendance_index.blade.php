@@ -10,7 +10,11 @@
 
 @section('content')
 <div class="content">
+    @if (Auth::guard('admin')->check())
+    <h1 class="content-title">さんの勤怠</h1>
+    @elseif(Auth::guard('web')->check())
     <h1 class="content-title">勤怠一覧</h1>
+    @endif
     <div class="management-data">
         <div class="pegination">
             <p><a class="pegination__link" href="?month={{$targetDate->copy()->subMonth()->format('Y-m')}}">&larr;前月</a>

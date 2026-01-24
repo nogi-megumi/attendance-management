@@ -24,20 +24,20 @@ class StampCorrectRequest extends FormRequest
     public function rules()
     {
         return [
-            'updated_start_at'=>'required|date_foramt:H:i',
-            'updated_end_at'=> 'required|date_foramt:H:i|after:updated_start_at',
-            'rests.*.start_at'=> 'sometimes|required|date_foramt:H:i|after:updated_start_at|before:updated_end_at',
-            'rests.*.end_at' => 'sometimes|required|date_foramt:H:i|after:rests.*.start_at|before:updated_end_at',
+            'updated_start_at'=>'required',
+            'updated_end_at'=> 'required|after:updated_start_at',
+            'rests.*.start_at'=> 'nullable|after:updated_start_at|before:updated_end_at',
+            'rests.*.end_at' => 'nullable|after:rests.*.start_at|before:updated_end_at',
             'note'=> 'required',
         ];
     }
     public function messages()
     {
         return [
-            'updated_end_at.after:updated_start_at'=>'出勤時間もしくは退勤時間が不適切な値です',
-            'rests.*.start_at.after:updated_start_at'=>'休憩時間が不適切な値です',
-            'rests.*.start_at.before:updated_end_at'=> '休憩時間が不適切な値です',
-            'rests.*.end_at.before:updated_end_at' => '休憩時間もしくは退勤時間が不適切な値です',
+            'updated_end_at.after'=>'出勤時間もしくは退勤時間が不適切な値です',
+            'rests.*.start_at.after'=>'休憩時間が不適切な値です',
+            'rests.*.start_at.before'=> '休憩時間が不適切な値です',
+            'rests.*.end_at.before' => '休憩時間もしくは退勤時間が不適切な値です',
             'note.required'=>'備考を記入してください',
         ];
     }

@@ -9,33 +9,14 @@ use Illuminate\Http\Request;
 
 class StampCorrectRequestController extends Controller
 {
-    public function store(StampCorrectRequest $request,$attendance_id){
-        // ユーザーが申請した内容をテーブルに保存する
-        dd($request);
-        $rests=[];
-        foreach($request->rests as $restData){
-            if (!empty($restData['start_at']) && !empty($restData['end_at'])) {
-                $rests[]=[
-                    'start_at'=>$restData['start_at'],
-                    'end_at'=>$restData['end_at'],
-                ];
-            }
-        }
-        // $inputRests=[];
-        // foreach ($request->rests as $restData) {
-        //     if (empty($restData['start_at'])) {
-        //         continue;
-        //     }
-        //     $inputRests[]=[
-        //         'start_at' => $restData['start_at'],
-        //         'end_at' => $restData['end_at'],
-        //     ];
-        // }
-
+    public function store(StampCorrectRequest $request){
+        $rests=collect($request['rests'])->filter(function ($rest) {
+            return !empty($rest['start_at']);
+        })->values()->all();
         ModelsStampCorrectRequest::create([
-            'attendance_id'=>$attendance_id,
-            'updated_start_at'=>$request->start_at,
-            'updated_end_at'=>$request->end_at,
+            'attendance_id'=>$request->attendance_id,
+            'updated_start_at'=>$request->updated_start_at,
+            'updated_end_at'=>$request->updated_end_at,
             'updated_rests'=>$rests,
             'note'=>$request->note,
             'status'=>1, //1=承認待ち

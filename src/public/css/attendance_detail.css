@@ -19,6 +19,7 @@
     grid-column: 2/5;
     padding: 0.5rem;
     font-size: 16px;
+    text-align: left;
 }
 
 .form-item__label {
@@ -48,4 +49,5 @@
 .alart-message {
     font-size: 16px;
     color: rgb(250, 28, 28);
+    list-style-type: none;
 }
