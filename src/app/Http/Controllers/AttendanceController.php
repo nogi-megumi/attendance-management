@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Rest;
+use App\Models\StampCorrectRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -67,10 +68,26 @@ class AttendanceController extends Controller
         ];
         return view('attendance_index', $data);
     }
+    public function requestIndex(Request $request)
+    {
+        if (isset($request->tab)) {
+            $tab = $request->get('tab');
+        } else {
+            $tab = 1;
+        }
+        $user = Auth::user();
+        $attendances = Attendance::where('user_id', $user->id)
+            ->whereHas('stamp_correct_requests',function($query) use ($tab){
+                $query->where('status',$tab);
+            })
+            ->with('stamp_correct_requests')
+            ->orderBy('start_at', 'desc')
+            ->get();
+        return view('request_index', compact('attendances', 'tab'));
+    }
 
     public function show(Attendance $attendance)
     {
-        // 勤怠詳細を表示する
         return view('attendance_detail', compact('attendance'));
     }
 }

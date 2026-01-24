@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="content">
-    <h1 class="content-title">勤怠一覧</h1>
+    <h1 class="content-title">スタッフ一覧</h1>
     <div class="management-data">
         <table class="table">
             <thead class="table__title">
@@ -21,11 +21,13 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($users as $user)
                 <tr class="table__rows">
-                    <td class="grid__item__second">西怜奈</td>
-                    <td class="grid__item__third">reina.n@coathtech.com</td>
-                    <td class="grid__item__fourth"><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
+                    <td class="grid__item__second">{{$user->name}}</td>
+                    <td class="grid__item__third">{{$user->email}}</td>
+                    <td class="grid__item__fourth"><a class="" href="/admin/attendance/staff/{{$user->id}}">詳細</a></td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
