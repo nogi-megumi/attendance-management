@@ -6,6 +6,8 @@ use App\Http\Requests\StampCorrectRequest;
 use App\Models\Attendance;
 use App\Models\StampCorrectRequest as ModelsStampCorrectRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class StampCorrectRequestController extends Controller
 {
@@ -24,11 +26,27 @@ class StampCorrectRequestController extends Controller
         return redirect()->back();
     }
 
-    public function index(){
-        // 日付毎の勤怠一覧表を表示
-        return view('admin_attendance_index');
+    public function index(Request $request)
+    {
+        if (isset($request->tab)) {
+            $tab = $request->get('tab');
+        } else {
+            $tab = 1;
+        }
+        // if (condition) {
+        //     auth $gaurdがwebかadminか
+        // }
+        $user = Auth::user();
+        $attendances = Attendance::where('user_id', $user->id)
+            ->whereHas('stamp_correct_requests', function ($query) use ($tab) {
+                $query->where('status', $tab);
+            })
+            ->with('stamp_correct_requests')
+            ->orderBy('start_at', 'desc')
+            ->get();
+        return view('request_index', compact('attendances', 'tab'));
     }
-    
+
     public function show($id){
         // 勤怠データを個別表示、修正内容を確認
         return view('admin_attendance_detail');

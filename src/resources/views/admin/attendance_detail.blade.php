@@ -42,7 +42,7 @@
                 <div class="grid__item table__rows">
                     <label class="form-item__label" for="">休憩{{$index==0 ? '' : ($index + 1)}}</label>
                     <input type="hidden" name="rests[{{$index}}][id]" value="{{$rest->id}}">
-                    <input class="form-item__input grid__item__second grid__item--bold" type="text" {{}}
+                    <input class="form-item__input grid__item__second grid__item--bold" type="text" 
                         name="rests[{{$index}}][start_at]" value="{{old(" rests.$index.start_at", $rest ?
                         $rest->start_at->format('H:i'):'') }}">
                     <span class="grid__item__third grid__item--bold">&sim;</span>
