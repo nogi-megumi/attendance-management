@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('user_id');
             $table->dateTime('start_at');
-            $table->dateTime('end_at');
-            $table->string("status");
+            $table->dateTime('end_at')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -11,21 +10,20 @@ class AdminAttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        // 日付毎の勤怠一覧表を表示
         $dayParam = $request->query('day', now()->toDateString());
         try {
             $targetDate = Carbon::parse($dayParam);
         } catch (\Exception $e) {
-            $targetDate =now();
+            $targetDate = now();
         }
 
-        $users=User::with(['attendances'=>function($query) use ($targetDate){
+        $users = User::with(['attendances' => function ($query) use ($targetDate) {
             $query->whereDate('start_at', $targetDate->toDateString());
-        },'attendances.rests'])->get();
+        }, 'attendances.rests'])->get();
 
         $attendances = [];
-        foreach($users as $user){
-            $workData=$user->attendances->first();
+        foreach ($users as $user) {
+            $workData = $user->attendances->first();
 
             if ($workData) {
                 $totalRestMinutes = 0;
@@ -47,7 +45,7 @@ class AdminAttendanceController extends Controller
                 $attendances[] = $workData;
             } else {
                 $attendances[] = (object)[
-                    'user'=>$user,
+                    'user' => $user,
                     'start_at' => null,
                     'end_at' => null,
                     'work_total' => null,
@@ -55,7 +53,12 @@ class AdminAttendanceController extends Controller
                 ];
             }
         }
-        
-        return view('admin.attendance_index',compact('attendances','targetDate'));
+
+        return view('admin.attendance_index', compact('attendances', 'targetDate'));
+    }
+    public function staffIndex()
+    {
+        $users = User::all();
+        return view('admin.staff', compact('users'));
     }
 }

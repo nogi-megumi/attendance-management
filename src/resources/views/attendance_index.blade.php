@@ -11,7 +11,7 @@
 @section('content')
 <div class="content">
     @if (Auth::guard('admin')->check())
-    <h1 class="content-title">さんの勤怠</h1>
+    <h1 class="content-title">{{$user->name}}さんの勤怠</h1>
     @elseif(Auth::guard('web')->check())
     <h1 class="content-title">勤怠一覧</h1>
     @endif
@@ -44,7 +44,13 @@
                         <td>{{$attendance->end_at ? $attendance->end_at->format('H:i'):""}}</td>
                         <td>{{$attendance->rest_total}}</td>
                         <td>{{$attendance->work_total}}</td>
-                        <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
+                        <td>@if (Auth::guard('admin')->check())
+                            <a class="" href="/admin/attendance/detail/{{$attendance->id}}">詳細</a>
+                            @elseif(Auth::guard('web')->check())
+                            <a class=""
+                                href="/attendance/detail/{{$attendance->id}}">詳細</a>
+                            @endif
+                        </td>
                         @else
                         <td>{{$attendance->display_date->isoFormat('MM/DD(ddd)')}}</td>
                         <td></td>

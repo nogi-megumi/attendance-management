@@ -10,12 +10,22 @@
 
 @section('content')
 <div class="content">
-    <div class="status-block"><span class="status">{{$workStatus}}</span></div>
+    <div class="status-block"><span class="status">
+            @if ($workStatus==1)
+            勤務外
+            @elseif($workStatus==2)
+            勤務中
+            @elseif($workStatus==3)
+            休憩中
+            @elseif($workStatus==4)
+            退勤済
+            @endif</span>
+    </div>
     <div class="date">{{$today->isoFormat('YYYY年MM月DD日(ddd)')}}</div>
     <div class="time">{{$today->isoFormat('HH:mm')}}</div>
     <div class="button-group">
         @switch($workStatus)
-        @case('出勤外')
+        @case(1)
         <div class="button-group__item">
             <form action="/attendance" method="POST">
                 @csrf
@@ -23,7 +33,7 @@
             </form>
         </div>
         @break
-        @case('出勤中')
+        @case(2)
         <div class="button-group__item">
             <form action="/attendance" method="POST">
                 @csrf
@@ -42,7 +52,7 @@
             </form>
         </div>
         @break
-        @case('休憩中')
+        @case(3)
         <form action="/rest" method="POST">
             @csrf
             @method('PUT')
@@ -50,9 +60,9 @@
             <button class="button button--white">休憩戻</button>
         </form>
         @break
-        @case('退勤済')
+        @case(4)
         <div class="message">お疲れ様でした。</div>
         @break
         @endswitch
-</div>
-@endsection
+    </div>
+    @endsection

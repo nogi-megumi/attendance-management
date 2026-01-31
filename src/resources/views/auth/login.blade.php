@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="content">
-
     @if (Route::is('admin.login'))
     <div class="title">管理者ログイン</div>
     @else

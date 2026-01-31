@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attendance>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Rest>
  */
-class AttendanceFactory extends Factory
+class RestFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,8 @@ class AttendanceFactory extends Factory
     public function definition()
     {
         return [
-            'start_at'=> '2026-02-01 9:00',
-            'end_at'=> '2026-02-01 18:00',
-            'status'=>4
+            'start_at'=>'12:00:00',
+            'end_at'=>'13:00:00'
         ];
     }
 }

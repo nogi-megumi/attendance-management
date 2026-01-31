@@ -18,7 +18,7 @@ class RestController extends Controller
             'start_at' => Carbon::now(),
         ]);
         $workData = Attendance::find($request->attendance_id);
-        $workData->update(['status' => '休憩中']);
+        $workData->update(['status' => 3]);
         return redirect()->route('attendance.show');
     }
     public function update(Request $request)
@@ -32,7 +32,7 @@ class RestController extends Controller
             $rest->update([
                 'end_at' => Carbon::now(),
             ]);
-            $workData->update(['status' => '出勤中']);
+            $workData->update(['status' => 2]);
         }
         return redirect()->route('attendance.show');
     }

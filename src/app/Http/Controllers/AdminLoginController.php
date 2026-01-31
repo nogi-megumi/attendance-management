@@ -29,12 +29,6 @@ class AdminLoginController extends Controller
      */
     protected $guard;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
-     * @return void
-     */
     public function __construct()
     {
         config(['fortify.guard' => 'admin']);
@@ -59,7 +53,9 @@ class AdminLoginController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        config(['fortify.guard' => 'admin']);
         return $this->loginPipeline($request)->then(function ($request) {
+            Auth::shouldUse('admin');
             return app(AdminLoginResponse::class);
         });
     }
@@ -100,7 +96,7 @@ class AdminLoginController extends Controller
      */
     public function destroy(Request $request): LogoutResponse
     {
-        $this->guard->logout();
+        Auth::guard('admin')->logout();
 
         if ($request->hasSession()) {
             $request->session()->invalidate();
