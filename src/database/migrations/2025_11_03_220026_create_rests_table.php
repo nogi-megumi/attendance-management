@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('rests', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('user_id');
+            $table->foreignUuid('attendance_id');
             $table->dateTime('start_at');
-            $table->dateTime('end_at');
+            $table->dateTime('end_at')->nullable();
             $table->timestamps();
         });
     }

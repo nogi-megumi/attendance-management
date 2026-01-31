@@ -22,14 +22,21 @@ class LoginController extends Controller
 {
     protected $guard;
 
-    public function __construct(StatefulGuard $guard)
-    {
-        $this->guard = Auth::guard('web');
-    }
+    // public function __construct(StatefulGuard $guard)
+    // {
+    //     config(['fortify.guard' => 'web']);
+    // }
+    // public function __construct(StatefulGuard $guard)
+    // {
+    //     $this->guard = $guard;
+    // }
 
     public function store(LoginRequest $request)
     {
+        config(['fortify.guard' => 'web']);
+
         return $this->loginPipeline($request)->then(function ($request) {
+            $request->session()->regenerate();
             return app(LoginResponse::class);
         });
     }

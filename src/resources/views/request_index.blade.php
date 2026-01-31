@@ -30,21 +30,27 @@
             <tbody>
                 @if (isset($attendances))
                 @foreach ($attendances as $attendance)
-                    @foreach ($attendance->stamp_correct_requests as $request)
-                    <tr class="table__rows">
-                        <td>@if ($request->status==1)
-                            承認待ち
-                            @elseif($request->status==2)
-                            承認済み
-                            @endif
-                        </td>
-                        <td>{{$attendance->user->name}}</td>
-                        <td>{{$attendance->start_at->format('Y/m/d')}}</td>
-                        <td>{{$request->note}}</td>
-                        <td>{{$request->created_at->format('Y/m/d')}}</td>
-                        <td><a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a></td>
-                    </tr>
-                    @endforeach
+                @foreach ($attendance->stamp_correct_requests as $request)
+                <tr class="table__rows">
+                    <td>@if ($request->status==1)
+                        承認待ち
+                        @elseif($request->status==2)
+                        承認済み
+                        @endif
+                    </td>
+                    <td>{{$attendance->user->name}}</td>
+                    <td>{{$attendance->start_at->format('Y/m/d')}}</td>
+                    <td>{{$request->note}}</td>
+                    <td>{{$request->created_at->format('Y/m/d')}}</td>
+                    <td>@if (Auth::guard('admin')->check())
+                        <a class=""
+                            href="{{route('admin.approve',['correct_request'=>$request->id])}}">詳細</a>
+                        @elseif(Auth::guard('web')->check())
+                        <a class="" href="/attendance/detail/{{$attendance->id}}">詳細</a>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
                 @endforeach
                 @endif
             </tbody>

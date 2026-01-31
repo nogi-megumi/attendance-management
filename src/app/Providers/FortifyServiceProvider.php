@@ -32,9 +32,6 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
-        // Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
-        // Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
-        // Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::registerView(function () {
             return view('auth.register');
         });
@@ -42,30 +39,24 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             return view('auth.login');
         });
+        if (request()->is('/admin/*') || request()->is('/admin')) {
+            config(['fortify.guard' => 'admin']);
+        } else {
+            config(['fortify.guard' => 'web']);
+        }
+        Fortify::authenticateUsing(function ($request) {
+            $guard = config('fortify.guard');
+            $model = $guard === 'admin' ? \App\Models\Admin::class : \App\Models\User::class;
+            $user = $model::where('email', $request->email)->first();
 
-        // Fortify::authenticateUsing(function ($request) {
-        //     $user = User::where('email', $request->email)->first();
-
-        //     if ($user && Hash::check($request->password, $user->password)) {
-        //         return $user;
-        //     }
-        // });
-        // app()->singleton(LoginResponseContract::class, function () {
-        //     return new class implements LoginResponseContract {
-        //         public function toResponse($request)
-        //         {
-        //             return redirect()->route('attendance.show');
-        //         }
-        //     };
-        // });
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;
+            }
+        });
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
             return Limit::perMinute(10)->by($email . $request->ip());
         });
-
-        // RateLimiter::for('two-factor', function (Request $request) {
-        //     return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        // });
     }
 }

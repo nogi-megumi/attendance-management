@@ -2,14 +2,13 @@
 
 @section('content')
 <div class="content">
-
     @if (Route::is('admin.login'))
     <div class="title">管理者ログイン</div>
     @else
     <div class="title">ログイン</div>
     @endif
     <div class="form-group">
-        <form class="form" action="{{isset($gaurd) ? route('admin.login') : route('login')}}" method="POST">
+        <form class="form" action="{{isset($guard) ? route('admin.login') : route('login')}}" method="POST">
             @csrf
             <div class="form-item">
                 <label class="form-item__label" for="email">メールアドレス</label>

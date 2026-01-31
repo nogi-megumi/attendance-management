@@ -18,6 +18,7 @@ use Laravel\Fortify\Fortify;
 use App\Http\Requests\LoginRequest;
 use App\Responses\AdminLoginResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
@@ -28,15 +29,9 @@ class AdminLoginController extends Controller
      */
     protected $guard;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
-     * @return void
-     */
-    public function __construct(StatefulGuard $guard)
+    public function __construct()
     {
-        $this->guard = $guard;
+        config(['fortify.guard' => 'admin']);
     }
 
     /**
@@ -58,7 +53,9 @@ class AdminLoginController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        config(['fortify.guard' => 'admin']);
         return $this->loginPipeline($request)->then(function ($request) {
+            Auth::shouldUse('admin');
             return app(AdminLoginResponse::class);
         });
     }
@@ -87,7 +84,7 @@ class AdminLoginController extends Controller
             config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
             config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
             Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : null,
-            AttemptToAuthenticate::class,
+            new \App\Actions\Admin\AttemptToAuthenticate(Auth::guard('admin'), app(\Laravel\Fortify\LoginRateLimiter::class)),
             PrepareAuthenticatedSession::class,
         ]));
     }
@@ -99,7 +96,7 @@ class AdminLoginController extends Controller
      */
     public function destroy(Request $request): LogoutResponse
     {
-        $this->guard->logout();
+        Auth::guard('admin')->logout();
 
         if ($request->hasSession()) {
             $request->session()->invalidate();
