@@ -18,7 +18,7 @@ Route::prefix('/admin')->group(function () {
         Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])->name('admin.attendance.index');
         Route::get('/staff/list', [AdminAttendanceController::class, 'staffIndex']);
         Route::get('/attendance/staff/{user}', [AttendanceController::class, 'index']);
-        Route::get('/attendance/detail/{attendance}', [AttendanceController::class, 'show']);
+        Route::get('/attendance/{attendance}', [AttendanceController::class, 'show']);
     });
 });
 
