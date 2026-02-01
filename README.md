@@ -22,10 +22,10 @@
   7. php artisan db:seed
 
 ## 使用技術
-- php8.0.
+- php8.0.30
 - Laravel9.52.21
-- nginx
-- mysql
+- nginx1.27.5
+- mysql8.0.26
 
 ## ログイン情報
 ### 一般ユーザー
