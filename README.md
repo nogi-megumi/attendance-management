@@ -27,12 +27,17 @@
 - nginx
 - mysql
 
-## ログイン用一般ユーザー
+## ログイン情報
+### 一般ユーザー
 - 名前：西怜奈
 - メールアドレス：reina-n@coachtech.com
 - パスワード：testuser
-## ログイン用管理者
+### 管理者
 - メールアドレス：testAdmin@coachtech.com
 - パスワード：testadmin
+
+## URL
+- 開発環境：http://localhost/
+- hphpMyAdmin：http://localhost:8080/
 
 
